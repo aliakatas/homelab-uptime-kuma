@@ -1,0 +1,19 @@
+networks:
+  proxy:
+    external: true
+
+services:
+  uptime-kuma:
+      image: docker.io/elestio/uptime-kuma:latest
+      container_name: uptime-kuma
+      cap_add:
+        - NET_RAW
+      networks:
+        - proxy
+      restart: unless-stopped
+      healthcheck:
+        disable: true
+      volumes:
+        - ./data:/app/data
+      ports:
+        - '127.0.0.1:13001:3001'
